@@ -24,21 +24,25 @@ public class VorstellungDao {
     }
 
     
-    public List<VorstellungDTO> getVorstellungenByDatum(Date datum) {
-        // TODO: Aufgabe 4c) 
-        return null;
+    public List<VorstellungDTO> getVorstellungenByDatum(LocalDate datum) {
+        // TODO: Aufgabe 4c)
+        String sql = "SELECT * FROM vorstellung WHERE datum = ?";
+        return jdbcTemplate.query(sql, new Object[]{datum}, new DataClassRowMapper<>(VorstellungDTO.class));
     }
 
      
-    public List<VorstellungDTO> getVorstellungenByUhrzeit(Time uhrzeit) {
+    public List<VorstellungDTO> getVorstellungenByUhrzeit(LocalTime uhrzeit) {
         // TODO: Aufgabe 4c)
-        return null;
+        String sql = "SELECT * FROM vorstellung WHERE uhrzeit = ?";
+        return jdbcTemplate.query(sql, new Object[]{uhrzeit}, new DataClassRowMapper<>(VorstellungDTO.class));
     }
 
     // Vorher Klassen Date und Time. Geändert auf LocalDate und LocalTime, da in Controller LocalDate und LocalTime übergeben wurde.
     public List<VorstellungDTO> getVorstellungenByDatumAndUhrzeit(LocalDate datum, LocalTime uhrzeit) {
-        // TODO: Aufgabe 4c) 
-        return null;
+        // TODO: Aufgabe 4c)
+        String sql = "SELECT * FROM vorstellung WHERE datum = ? AND uhrzeit = ?";
+        return jdbcTemplate.query(sql, new Object[]{datum, uhrzeit}, new DataClassRowMapper<>(VorstellungDTO.class));
+
     }
     
     public void saveVorstellung(VorstellungDTO vorstellung) {

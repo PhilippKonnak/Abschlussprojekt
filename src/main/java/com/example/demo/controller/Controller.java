@@ -121,8 +121,11 @@ public class Controller {
         //TODO: Aufgabe 4c) passende Vorstellungen abrufen
 
         if((datum != null && uhrzeit != null)) {
-            // noch zu befüllen
             vorstellungen = vorstellungDao.getVorstellungenByDatumAndUhrzeit(datum, uhrzeit);
+        } else if(datum != null && uhrzeit == null) {
+            vorstellungen = vorstellungDao.getVorstellungenByDatum(datum);
+        } else if(datum == null && uhrzeit != null) {
+            vorstellungen = vorstellungDao.getVorstellungenByUhrzeit(uhrzeit);
         } else {
             vorstellungen = vorstellungDao.getAllVorstellungen();
         }
