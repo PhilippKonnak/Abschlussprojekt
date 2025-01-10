@@ -11,5 +11,30 @@
 
 <!-- TODO: Aufgabe 4d) Erstellen des Formulars -->
 
+<form method="post" th:action = "@{/addVorstellung}" th:object = "${vorstellung}" class="mb-3">
+  <label>VorstellungsID</label>
+  <input type="number" id="vId" th:field="*{vId}" required="required" class="form-control">
+  <br>
+  <label>Datum</label>
+  <input type="date" id="datum" th:field="*{datum}" required="required" class="form-control">
+  <br>
+  <label>Uhrzeit</label>
+  <input type="time" id="uhrzeit" th:field="*{uhrzeit}" required="required" class="form-control">
+  <br>
+  <label>Saalname</label>
+  <input type="text" id="saalname" th:field="*{saalname}" required="required" class="form-control">
+  <br>
+  <label>FilmID</label>
+  <input type="number" id="filmId" th:field="*{filmId}" required="required" class="form-control">
+  <br>
+  <button type="submit" name="btnSubmit" value="submit" class="btn btn-primary mb-3">Vorstellung hinzufügen</button>
+</form>
+
 </body>
 </html>
+
+<!--orstellungDTO(@JsonProperty("vId") int vId,-->
+<!--@JsonProperty("datum") Date datum,-->
+<!--@JsonProperty("uhrzeit") Time uhrzeit,-->
+<!--@JsonProperty("saalname") String saalname,-->
+<!--@JsonProperty("filmId") int filmId) {}-->

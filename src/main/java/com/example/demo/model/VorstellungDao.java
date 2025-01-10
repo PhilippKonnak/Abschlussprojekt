@@ -47,7 +47,8 @@ public class VorstellungDao {
     
     public void saveVorstellung(VorstellungDTO vorstellung) {
         // TODO: Aufgabe 4e) speichere eine neue Vorstellung
-        return;
+        String sql = "INSERT INTO vorstellung (vId, datum, uhrzeit, saalname, filmId) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, vorstellung.vId(), vorstellung.datum(), vorstellung.uhrzeit(), vorstellung.saalname(), vorstellung.filmId());
     }
 
 }

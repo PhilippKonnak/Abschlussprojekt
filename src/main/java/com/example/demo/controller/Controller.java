@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.sql.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -113,8 +115,8 @@ public class Controller {
 
     @GetMapping("/vorstellung")
     public String getVorstellungen(Model model,
-                                   @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate datum,
-                                   @RequestParam(required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime uhrzeit){
+                                   @RequestParam(required = false) @DateTimeFormat(pattern = "dd.MM.YYYY") LocalDate datum,
+                                   @RequestParam(required = false) LocalTime uhrzeit){
 
         List<VorstellungDTO> vorstellungen = null;
 
@@ -145,10 +147,20 @@ public class Controller {
         return "addVorstellung";
     }
 
+    @PostMapping("/addVorstellung")
     public String addVorstellung(@ModelAttribute("vorstellung")VorstellungDTO vorstellung, Model model){
         //TODO: Aufgabe 4e (return muss auch angepasst werden)
-        return "";
+        vorstellungDao.saveVorstellung(vorstellung);
+        model.addAttribute("message", "Vorstellung successfully added!");
+        return "redirect:/vorstellung";
     }
+
+//    @PostMapping("/addFilm")
+//    public String addFilm(@ModelAttribute("film")FilmDTO film, Model model){
+//        filmDao.saveFilm(film);
+//        model.addAttribute("message", "Film successfully added!");
+//        return "redirect:/film";
+//    }
 
     @GetMapping(value = "/tickets")
     public String getTickets(Model model, @RequestParam(required = false) String email){

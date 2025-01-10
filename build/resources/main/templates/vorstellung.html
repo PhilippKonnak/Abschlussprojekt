@@ -61,8 +61,10 @@
     <tbody>
     <tr th:each="vorstellung : ${vorstellungen}">
         <td th:text="${vorstellung.vId}"></td>
-        <td th:text="${#dates.format(vorstellung.datum, 'dd.MM.yyyy')}"></td>
-        <td th:text="${#dates.format(vorstellung.uhrzeit, 'HH:mm')}"></td>
+        <td th:text="${#temporals.format(vorstellung.datum, 'dd.MM.yyyy')}"></td>
+<!--        <td th:text="${vorstellung.datum}"></td>-->
+<!--        <td th:text="${#dates.format(vorstellung.uhrzeit, 'HH:mm')}"></td>-->
+        <td th:text="${vorstellung.uhrzeit}"></td>
         <td th:text="${vorstellung.saalname}"></td>
         <td th:text="${vorstellung.filmId}"></td>
     </tr>
