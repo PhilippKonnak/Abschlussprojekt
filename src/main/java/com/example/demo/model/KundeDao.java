@@ -53,6 +53,9 @@ public class KundeDao {
 
     public void updatePassword(String email, String newPasswort) {
         // TODO: Aufgabe 4g)
+        // Übergebe das Passowrt und die E-Mail und ändere für den Benutzer so das Passwort.
+        String sql = "UPDATE kunde SET passwort = ? WHERE email = ?";
+        jdbcTemplate.update(sql, newPasswort, email);
     }
 
 }
