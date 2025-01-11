@@ -155,16 +155,20 @@ public class Controller {
         return "redirect:/vorstellung";
     }
 
-//    @PostMapping("/addFilm")
-//    public String addFilm(@ModelAttribute("film")FilmDTO film, Model model){
-//        filmDao.saveFilm(film);
-//        model.addAttribute("message", "Film successfully added!");
-//        return "redirect:/film";
-//    }
-
     @GetMapping(value = "/tickets")
     public String getTickets(Model model, @RequestParam(required = false) String email){
         // TODO: Aufgabe 4f)
+
+        List<TicketDTO> tickets;
+
+        if((email != null && !email.isEmpty())) {
+            tickets = ticketDao.getTicketsByEmail(email);
+        } else {
+            tickets = ticketDao.getAllTickets();
+        }
+
+        model.addAttribute("tickets", tickets);
+
         return "ticket";
     }
 
