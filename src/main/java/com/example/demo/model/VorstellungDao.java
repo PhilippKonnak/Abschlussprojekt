@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import java.sql.Date;
-import java.sql.Time;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -23,14 +22,14 @@ public class VorstellungDao {
         return jdbcTemplate.query(sql, new DataClassRowMapper<>(VorstellungDTO.class));
     }
 
-    
+    // Änderung in LocalDate vorgenommen, um Parsing-Fehler zu beheben
     public List<VorstellungDTO> getVorstellungenByDatum(LocalDate datum) {
         // TODO: Aufgabe 4c)
         String sql = "SELECT * FROM vorstellung WHERE datum = ?";
         return jdbcTemplate.query(sql, new Object[]{datum}, new DataClassRowMapper<>(VorstellungDTO.class));
     }
 
-     
+    // Änderung in LocalTime vorgenommen, um Parsing-Fehler zu beheben
     public List<VorstellungDTO> getVorstellungenByUhrzeit(LocalTime uhrzeit) {
         // TODO: Aufgabe 4c)
         String sql = "SELECT * FROM vorstellung WHERE uhrzeit = ?";
