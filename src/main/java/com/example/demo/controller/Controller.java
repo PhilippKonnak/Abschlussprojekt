@@ -122,6 +122,7 @@ public class Controller {
 
         //TODO: Aufgabe 4c) passende Vorstellungen abrufen
 
+        // Ähnlich wie bei den Filmen zu erstellen:
         if((datum != null && uhrzeit != null)) {
             vorstellungen = vorstellungDao.getVorstellungenByDatumAndUhrzeit(datum, uhrzeit);
         } else if(datum != null && uhrzeit == null) {
@@ -150,8 +151,11 @@ public class Controller {
     @PostMapping("/addVorstellung")
     public String addVorstellung(@ModelAttribute("vorstellung")VorstellungDTO vorstellung, Model model){
         //TODO: Aufgabe 4e (return muss auch angepasst werden)
+
+        // Abspeichern in DB und dann redirecten wie bei Film auch
         vorstellungDao.saveVorstellung(vorstellung);
         model.addAttribute("message", "Vorstellung successfully added!");
+        // Äquivalent machen wie beim Film
         return "redirect:/vorstellung";
     }
 
@@ -161,6 +165,7 @@ public class Controller {
 
         List<TicketDTO> tickets;
 
+        // Bedingung äquivalent wie bei Film gemacht
         if((email != null && !email.isEmpty())) {
             tickets = ticketDao.getTicketsByEmail(email);
         } else {
@@ -346,5 +351,58 @@ public class Controller {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
+
+    /* BUG FIX NEU */
+    // Einloggen testen mit
+    // Benutzer: 84087-47_3@jyijeyvxd.db
+    // Passwort: f7KsF4z#H7
+    // Ein gültiges neues Passwort: Abcdef1!
+
+    @PostMapping("/tickets")
+    public String postTicket(@RequestParam(value = "email", required = false) String email,
+                             @RequestParam(value = "passwort", required = false) String passwortKunde,
+                             @RequestParam(value = "mitarbeiterkennung", required = false) String mitarbeiterkennung,
+                             @RequestParam(value = "passwort", required = false) String passwortMitarbeiter,
+                             RedirectAttributes redirectAttributes, HttpSession session) {
+
+        if (email != null && !email.isEmpty() && passwortKunde != null) {
+            // Check if Kunde exists and the password matches
+            KundeDTO kunde = kundeDao.getKundeByEmail(email);
+            if (kunde != null && kunde.passwort().equals(passwortKunde)) {
+                session.setAttribute("role", "kunde");  // Save role in session
+                session.setAttribute("email", email);   // Save email in session
+                redirectAttributes.addFlashAttribute("vorname", kunde.vorname());
+                redirectAttributes.addFlashAttribute("nachname", kunde.nachname());
+                redirectAttributes.addFlashAttribute("message", "Herzlich Willkommen, " + kunde.vorname() + "!");
+                return "redirect:/vorstellung";  // Redirect to the desired page for Kunde
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Falsche Eingabe für Email oder Passwort.");
+                return "redirect:/";  // Redirect back to the login page if login failed for Kunde
+            }
+        }
+
+        // Check if the login is for Mitarbeiter
+        if (mitarbeiterkennung != null && !mitarbeiterkennung.isEmpty() && passwortMitarbeiter != null) {
+            // Check if Mitarbeiter exists and the password matches
+            MitarbeiterDTO mitarbeiter = mitarbeiterDao.getMitarbeiterByKennung(mitarbeiterkennung);
+            if (mitarbeiter != null && mitarbeiter.passwort().equals(passwortMitarbeiter)) {
+                session.setAttribute("role", "mitarbeiter");  // Save role in session
+                session.setAttribute("email", mitarbeiterkennung); // Save mitarbeiterkennung in session
+                redirectAttributes.addFlashAttribute("vorname", mitarbeiter.vorname());
+                redirectAttributes.addFlashAttribute("nachname", mitarbeiter.nachname());
+                redirectAttributes.addFlashAttribute("message", "Herzlich Willkommen, " + mitarbeiter.vorname() + "!");
+                return "redirect:/vorstellung";  // Redirect to the desired page for Mitarbeiter
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Falsche Eingabe für Mitarbeiterkennung oder Passwort.");
+                return "redirect:/";  // Redirect back to the login page if login failed for Mitarbeiter
+            }
+        }
+
+        // If neither Kunde nor Mitarbeiter, redirect back with an error
+        redirectAttributes.addFlashAttribute("error", "Ungültige Eingabe.");
+        return "redirect:/";
+    }
+
+
 
 }

@@ -45,12 +45,16 @@ public class KundeDao {
     public List<KundeDTO> getAllKunden() {
         // TODO: Aufgabe 4b) gib alle Kunden zurueck
 
-        // Viel einfachere Umsetzung wie in Propra2 besprochen durch Übergabe eine neuen Objekte von DataClassRowMapper.
+        // Viel einfachere Umsetzung wie in Propra2 besprochen durch Übergabe eines neuen Objektes von DataClassRowMapper.
         String sql = "SELECT * FROM kunde";
         return jdbcTemplate.query(sql, new DataClassRowMapper<>(KundeDTO.class)
         );
     }
 
+
+    // Benutzer: 84087-47_3@jyijeyvxd.db
+    // Passwort: f7KsF4z#H7
+    // Ein gültiges neues Passwort zum testen: Abcdef1!
     public void updatePassword(String email, String newPasswort) {
         // TODO: Aufgabe 4g)
         // Übergebe das Passowrt und die E-Mail und ändere für den Benutzer so das Passwort.

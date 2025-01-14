@@ -10,6 +10,7 @@
 <h1>Neue Vorstellung hinzufügen:</h1>
 
 <!-- TODO: Aufgabe 4d) Erstellen des Formulars -->
+<!--Äquivalent nachgebaut wie bei addFilm, aber types angepasst je nach Typ.-->
 
 <form method="post" th:action = "@{/addVorstellung}" th:object = "${vorstellung}" class="mb-3">
   <label>VorstellungsID</label>
@@ -32,9 +33,3 @@
 
 </body>
 </html>
-
-<!--orstellungDTO(@JsonProperty("vId") int vId,-->
-<!--@JsonProperty("datum") Date datum,-->
-<!--@JsonProperty("uhrzeit") Time uhrzeit,-->
-<!--@JsonProperty("saalname") String saalname,-->
-<!--@JsonProperty("filmId") int filmId) {}-->

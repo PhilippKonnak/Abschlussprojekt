@@ -60,7 +60,7 @@ public class FilmDao {
 
     public List<FilmDTO> getFilmeByTitel(String titel) {
         // TODO: Aufgabe 4a) filtere Filme nach dem Titel
-        // Äquivalent nachgebaut wie bei den anderen 2 Methoden
+        // Äquivalent nachgebaut wie bei den anderen 2 Methoden oben
         String sql = "SELECT * FROM film WHERE LOWER(titel) LIKE ?";
 
         return jdbcTemplate.query(

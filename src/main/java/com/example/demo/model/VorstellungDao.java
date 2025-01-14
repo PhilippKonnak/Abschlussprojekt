@@ -26,6 +26,7 @@ public class VorstellungDao {
     public List<VorstellungDTO> getVorstellungenByDatum(LocalDate datum) {
         // TODO: Aufgabe 4c)
         String sql = "SELECT * FROM vorstellung WHERE datum = ?";
+        // datum hier übergeben // mit DataClassRowMapper Erzeugung wie in Propra2
         return jdbcTemplate.query(sql, new Object[]{datum}, new DataClassRowMapper<>(VorstellungDTO.class));
     }
 
@@ -33,6 +34,7 @@ public class VorstellungDao {
     public List<VorstellungDTO> getVorstellungenByUhrzeit(LocalTime uhrzeit) {
         // TODO: Aufgabe 4c)
         String sql = "SELECT * FROM vorstellung WHERE uhrzeit = ?";
+        // uhzeit muss hier übergeben werden // mit DataClassRowMapper Erzeugung wie in Propra2
         return jdbcTemplate.query(sql, new Object[]{uhrzeit}, new DataClassRowMapper<>(VorstellungDTO.class));
     }
 
@@ -40,6 +42,7 @@ public class VorstellungDao {
     public List<VorstellungDTO> getVorstellungenByDatumAndUhrzeit(LocalDate datum, LocalTime uhrzeit) {
         // TODO: Aufgabe 4c)
         String sql = "SELECT * FROM vorstellung WHERE datum = ? AND uhrzeit = ?";
+        // beides muss hier übergeben werden // mit DataClassRowMapper Erzeugung wie in Propra2
         return jdbcTemplate.query(sql, new Object[]{datum, uhrzeit}, new DataClassRowMapper<>(VorstellungDTO.class));
 
     }
@@ -47,6 +50,7 @@ public class VorstellungDao {
     public void saveVorstellung(VorstellungDTO vorstellung) {
         // TODO: Aufgabe 4e) speichere eine neue Vorstellung
         String sql = "INSERT INTO vorstellung (vId, datum, uhrzeit, saalname, filmId) VALUES (?, ?, ?, ?, ?)";
+        // Alle Werte des DTOs, die ursprünglich aus der Eingabe stammen in die Query übergeben und dann in die DB schreiben
         jdbcTemplate.update(sql, vorstellung.vId(), vorstellung.datum(), vorstellung.uhrzeit(), vorstellung.saalname(), vorstellung.filmId());
     }
 

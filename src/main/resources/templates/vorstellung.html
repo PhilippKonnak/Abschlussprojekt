@@ -61,7 +61,7 @@
     <tbody>
     <tr th:each="vorstellung : ${vorstellungen}">
         <td th:text="${vorstellung.vId}"></td>
-<!--        Abänderung, um Parsing-Fehler zu vermeiden...-->
+<!--        Abänderung, um Parsing-Fehler zu vermeiden... dafür temporals genutzt-->
         <td th:text="${#temporals.format(vorstellung.datum, 'dd.MM.yyyy')}"></td>
 <!--        <td th:text="${#dates.format(vorstellung.uhrzeit, 'HH:mm')}"></td>-->
         <td th:text="${vorstellung.uhrzeit}"></td>
